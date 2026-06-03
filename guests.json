@@ -7,9 +7,14 @@
   },
   {
     "name": "Uyên hôi nách",
-    "status": "wait",
+    "status": "yes",
     "added": "2/6/2026",
-    "rsvp": null
+    "rsvp": {
+      "attending": "yes",
+      "count": "2",
+      "message": "",
+      "respondedAt": "2026-06-03T00:53:50.540Z"
+    }
   },
   {
     "name": "Ân cùi bắp",
