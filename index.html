@@ -794,7 +794,7 @@ body {
     </div>
 
     <div class="wish-text">
-     Thông tin lịch trình chi tiết sẽ được chúng con cập nhật trước ngày 30 tháng 9.💕
+     Thông tin lịch trình chi tiết sẽ được chúng con cập nhật trước ngày 30 tháng 9.
     </div>
   </div>
 
@@ -851,16 +851,17 @@ body {
       <div class="greeting" id="greetingLine"></div>
 
       <div class="field-group">
-        <label class="field-label">Số người đi cùng</label>
-        <input type="number" class="text-input" id="guestCount" placeholder="1" min="1" max="10">
-      </div>
-
-      <div class="field-group">
         <label class="field-label">Bạn có tham dự không?</label>
         <div class="attend-btns">
           <button class="attend-btn" id="btnYes" onclick="selectAttend('yes')">🌸 &nbsp;Tôi sẽ tham dự</button>
-          <button class="attend-btn" id="btnNo" onclick="selectAttend('no')">🍃 &nbsp;Rất tiếc, không thể đến</button>
+          <button class="attend-btn" id="btnNo" onclick="selectAttend('no')">🍃 &nbsp;Rất tiếc, tôi không thể đến</button>
         </div>
+      </div>
+
+      <div class="field-group" id="countGroup" style="display:none;">
+        <label class="field-label">Số người tham dự (bao gồm cả bạn)</label>
+        <input type="number" class="text-input" id="guestCount" placeholder="1" min="1" max="10" value="1">
+        <div style="font-size:12px;color:#999;margin-top:4px;">Ví dụ: Nếu bạn đi 1 mình thì nhập 1, nếu đi cùng 1 người nữa thì nhập 2</div>
       </div>
 
       <div class="field-group">
@@ -1084,8 +1085,21 @@ body {
     selectedAttend = choice;
     const btnYes = document.getElementById('btnYes');
     const btnNo = document.getElementById('btnNo');
+    const countGroup = document.getElementById('countGroup');
+    const guestCount = document.getElementById('guestCount');
+
     if (btnYes) btnYes.className = 'attend-btn' + (choice === 'yes' ? ' sel-yes' : '');
     if (btnNo) btnNo.className = 'attend-btn' + (choice === 'no' ? ' sel-no' : '');
+
+    // Show count field only if "Yes" is selected
+    if (countGroup) {
+      countGroup.style.display = choice === 'yes' ? 'block' : 'none';
+    }
+
+    // Reset count to 1 when selecting
+    if (guestCount && choice === 'yes') {
+      guestCount.value = '1';
+    }
   }
 
   // ── Guest: gửi RSVP ──
@@ -1095,7 +1109,7 @@ body {
       return;
     }
 
-    const count = document.getElementById('guestCount')?.value || 1;
+    const count = document.getElementById('guestCount')?.value || 0;
     const msg = document.getElementById('guestMsg')?.value?.trim() || '';
 
     const r = await fetch(`${API}/rsvp`, {
@@ -1149,7 +1163,10 @@ body {
     // Calculate totals
     const attending = guests.filter(g => g.status === 'yes');
     const notAttending = guests.filter(g => g.status === 'no');
-    const totalPeople = attending.reduce((sum, g) => sum + (g.rsvp?.count || 1), 0);
+    const totalPeople = attending.reduce((sum, g) => {
+      const count = parseInt(g.rsvp?.count) || 1;
+      return sum + count;
+    }, 0);
     const totalGuests = attending.length;
 
     wrap.style.display = 'block';
@@ -1157,26 +1174,30 @@ body {
     // Display summary
     if (summary) {
       summary.innerHTML = `
-        <div style="font-weight:600;font-size:16px;margin-bottom:8px;">
-          Tổng số khách tham dự: <span style="color:#c9687a;font-size:20px;">${totalPeople}</span> người
+        <div style="font-weight:600;font-size:18px;margin-bottom:8px;">
+          Tổng số người tham dự: <span style="color:#c9687a;font-size:24px;font-weight:700;">${totalPeople}</span> người
         </div>
         <div style="display:flex;gap:20px;justify-content:center;font-size:13px;">
-          <span>🌸 Tham dự: <strong>${totalGuests}</strong> khách</span>
-          <span>🍃 Không đến: <strong>${notAttending.length}</strong> khách</span>
+          <span>🌸 Xác nhận tham dự: <strong>${totalGuests}</strong> gia đình </span>
+          <span>🍃 Không thể đến: <strong>${notAttending.length}</strong> gia đình</span>
         </div>
       `;
     }
 
     // Display list
-    list.innerHTML = responded.map(g => `
-      <div class="resp-item">
-        <div>
-          <div class="resp-name">${g.name}${g.rsvp?.count > 1 ? ` <span style="font-size:12px;color:#aaa">+${g.rsvp.count - 1}</span>` : ''}</div>
-          ${g.rsvp?.message ? `<div style="font-size:12px;color:#b08090;font-style:italic;margin-top:2px">"${g.rsvp.message}"</div>` : ''}
+    list.innerHTML = responded.map(g => {
+      const count = parseInt(g.rsvp?.count) || 1;
+      const countDisplay = count > 1 ? ` (${count} người)` : '';
+      return `
+        <div class="resp-item">
+          <div>
+            <div class="resp-name">${g.name}</div>
+            ${g.rsvp?.message ? `<div style="font-size:12px;color:#b08090;font-style:italic;margin-top:2px">"${g.rsvp.message}"</div>` : ''}
+          </div>
+         <span class="resp-badge ${g.status}">${ g.status === 'yes'? `🌸 Tham dự <span style="font-size:12px;color:#aaa">${g.rsvp?.count ?? 0}</span>` : '🍃 Không đến'} </span>
         </div>
-        <span class="resp-badge ${g.status}">${g.status === 'yes' ? '🌸 Tham dự' : '🍃 Không đến'}</span>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // Khởi động
