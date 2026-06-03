@@ -1,13 +1,26 @@
 [
   {
-    "name": "asd",
-    "status": "yes",
+    "name": "Tuyết Gà",
+    "status": "wait",
     "added": "2/6/2026",
-    "rsvp": {
-      "attending": "yes",
-      "count": 1,
-      "message": "",
-      "respondedAt": "2026-06-03T00:17:25.100Z"
-    }
+    "rsvp": null
+  },
+  {
+    "name": "Uyên hôi nách",
+    "status": "wait",
+    "added": "2/6/2026",
+    "rsvp": null
+  },
+  {
+    "name": "Ân cùi bắp",
+    "status": "wait",
+    "added": "2/6/2026",
+    "rsvp": null
+  },
+  {
+    "name": "Bé răng hô",
+    "status": "wait",
+    "added": "2/6/2026",
+    "rsvp": null
   }
 ]
