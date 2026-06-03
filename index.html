@@ -878,6 +878,7 @@ body {
   <!-- Responses -->
   <div class="responses-wrap" id="responsesWrap" style="display:none">
     <div class="responses-title">✦ Danh sách đã xác nhận ✦</div>
+    <div id="responseSummary" style="text-align:center;margin:0 0 20px 0;padding:15px;background:linear-gradient(135deg,rgba(242,196,206,0.15),rgba(212,224,204,0.15));border-radius:8px;font-size:14px;color:#7a4f57;"></div>
     <div id="responsesList"></div>
   </div>
 
@@ -1135,17 +1136,41 @@ body {
   function renderResponses() {
     const wrap = document.getElementById('responsesWrap');
     const list = document.getElementById('responsesList');
+    const summary = document.getElementById('responseSummary');
     if (!wrap || !list) return;
+
     const responded = guests.filter(g => g.status !== 'wait');
     if (!responded.length) { wrap.style.display = 'none'; return; }
+
+    // Calculate totals
+    const attending = guests.filter(g => g.status === 'yes');
+    const notAttending = guests.filter(g => g.status === 'no');
+    const totalPeople = attending.reduce((sum, g) => sum + (g.rsvp?.count || 1), 0);
+    const totalGuests = attending.length;
+
     wrap.style.display = 'block';
+
+    // Display summary
+    if (summary) {
+      summary.innerHTML = `
+        <div style="font-weight:600;font-size:16px;margin-bottom:8px;">
+          Tổng số khách tham dự: <span style="color:#c9687a;font-size:20px;">${totalPeople}</span> người
+        </div>
+        <div style="display:flex;gap:20px;justify-content:center;font-size:13px;">
+          <span>🌸 Tham dự: <strong>${totalGuests}</strong> khách</span>
+          <span>🍃 Không đến: <strong>${notAttending.length}</strong> khách</span>
+        </div>
+      `;
+    }
+
+    // Display list
     list.innerHTML = responded.map(g => `
       <div class="resp-item">
         <div>
           <div class="resp-name">${g.name}${g.rsvp?.count > 1 ? ` <span style="font-size:12px;color:#aaa">+${g.rsvp.count - 1}</span>` : ''}</div>
           ${g.rsvp?.message ? `<div style="font-size:12px;color:#b08090;font-style:italic;margin-top:2px">"${g.rsvp.message}"</div>` : ''}
         </div>
-        <span class="resp-badge ${g.status}">${g.status === 'yes' ? '🌸 Tham dự' : '🍃 Không đến'}</span>
+        <span class="resp-badge ${g.status}">${g.status === 'yes' ? '🌸 Tham dú' : '🍃 Không đến'}</span>
       </div>
     `).join('');
   }
