@@ -1,0 +1,8 @@
+{
+  "name": "thiepcuoi",
+  "version": "1.0.0",
+  "description": "Thiệp cưới Phạm Rin & Quỳnh Như",
+  "dependencies": {
+    "@vercel/kv": "^1.0.0"
+  }
+}
