@@ -1170,7 +1170,7 @@ body {
           <div class="resp-name">${g.name}${g.rsvp?.count > 1 ? ` <span style="font-size:12px;color:#aaa">+${g.rsvp.count - 1}</span>` : ''}</div>
           ${g.rsvp?.message ? `<div style="font-size:12px;color:#b08090;font-style:italic;margin-top:2px">"${g.rsvp.message}"</div>` : ''}
         </div>
-        <span class="resp-badge ${g.status}">${g.status === 'yes' ? '🌸 Tham dú' : '🍃 Không đến'}</span>
+        <span class="resp-badge ${g.status}">${g.status === 'yes' ? '🌸 Tham dự' : '🍃 Không đến'}</span>
       </div>
     `).join('');
   }
