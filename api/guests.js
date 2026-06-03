@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+import { kv } from './db.js';
 
 const ADMIN_PASS = 'huydeptrai';
 

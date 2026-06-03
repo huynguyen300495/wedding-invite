@@ -1,0 +1,17 @@
+# Environment variables (contains sensitive data)
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Local development files
+*.log
+.DS_Store
+.claude/
+
+# Local guest data
+guests.json
+server.js
+LOCAL_DEV.md

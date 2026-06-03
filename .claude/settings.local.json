@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl -v http://localhost:3000/api/guests)"
+      "Bash(curl -v http://localhost:3000/api/guests)",
+      "Bash(npm install redis dotenv)"
     ],
     "deny": [],
     "ask": []
