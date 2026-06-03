@@ -1065,7 +1065,7 @@ body {
         box.style.display = 'block';
         if (guest.status === 'yes') {
           document.getElementById('successIcon').textContent = '🥂';
-          document.getElementById('successTitle').textContent = 'Hẹn gặp nhau nhé!';
+          document.getElementById('successTitle').textContent = 'Hẹn gặp mọi người trong ngày vui của chúng con!';
           document.getElementById('successText').textContent = `${val} đã xác nhận tham dự!`;
         } else {
           document.getElementById('successIcon').textContent = '🌿';
@@ -1138,12 +1138,12 @@ body {
       box.style.display = 'block';
       if (selectedAttend === 'yes') {
         document.getElementById('successIcon').textContent = '🌸';
-        document.getElementById('successTitle').textContent = 'Hẹn gặp nhau nhé!';
-        document.getElementById('successText').innerHTML = `<strong>${currentGuest}</strong> — vui lắm khi bạn sẽ đến chung vui!`;
+        document.getElementById('successTitle').textContent = 'Gia đình xin chân thành cảm ơn!';
+        document.getElementById('successText').innerHTML = `<strong>${currentGuest}</strong> và các cháu — đã xác nhận tham dự và sẽ đến chung vui cùng gia đình!`;
       } else {
         document.getElementById('successIcon').textContent = '🌿';
-        document.getElementById('successTitle').textContent = 'Cảm ơn bạn!';
-        document.getElementById('successText').innerHTML = `Tiếc khi không có <strong>${currentGuest}</strong>. Cảm ơn đã phúc đáp!`;
+        document.getElementById('successTitle').textContent = `Cảm ơn đã phản hồi`;
+        document.getElementById('successText').innerHTML = `Rất tiếc vì <strong>${currentGuest}</strong> không thể đến chung vui cùng gia đình. Hẹn gặp trong một dịp gần nhất!`;
       }
     }
 
