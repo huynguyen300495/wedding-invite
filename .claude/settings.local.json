@@ -1,8 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add index.html VERCEL_DEPLOY.md)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nAdd error handling and Vercel deployment guide\n\n- Added try-catch blocks to addGuest() and removeGuest() functions\n- Better error messages for network failures\n- Added console logging for debugging\n- Created VERCEL_DEPLOY.md with Redis setup instructions\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(curl -v http://localhost:3000/api/guests)"
     ],
     "deny": [],
     "ask": []
