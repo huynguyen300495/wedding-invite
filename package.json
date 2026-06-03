@@ -2,6 +2,10 @@
   "name": "thiepcuoi",
   "version": "1.0.0",
   "description": "Thiệp cưới Phạm Rin & Quỳnh Như",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
   "dependencies": {
     "@vercel/kv": "^1.0.0"
   }

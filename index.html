@@ -955,33 +955,49 @@ body {
     const name = inp.value.trim();
     if (!name) return;
 
-    const r = await fetch(`${API}/guests`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-admin-pass': ADMIN_PASS },
-      body: JSON.stringify({ name })
-    });
+    try {
+      const r = await fetch(`${API}/guests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-pass': ADMIN_PASS },
+        body: JSON.stringify({ name })
+      });
 
-    const data = await r.json();
-    if (!r.ok) { alert(data.error); return; }
+      const data = await r.json();
+      if (!r.ok) {
+        alert(data.error || 'Có lỗi xảy ra khi thêm khách');
+        return;
+      }
 
-    guests = data.guests;
-    inp.value = '';
-    buildSelect();
-    buildAdminTags();
+      guests = data.guests;
+      inp.value = '';
+      buildSelect();
+      buildAdminTags();
+    } catch (error) {
+      console.error('Error adding guest:', error);
+      alert('Không thể kết nối đến server. Vui lòng thử lại!');
+    }
   }
 
   // ── Admin: xoá khách ──
   async function removeGuest(name) {
-    const r = await fetch(`${API}/guests`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', 'x-admin-pass': ADMIN_PASS },
-      body: JSON.stringify({ name })
-    });
-    const data = await r.json();
-    if (!r.ok) { alert(data.error); return; }
-    guests = data.guests;
-    buildSelect();
-    buildAdminTags();
+    try {
+      const r = await fetch(`${API}/guests`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'x-admin-pass': ADMIN_PASS },
+        body: JSON.stringify({ name })
+      });
+      const data = await r.json();
+      if (!r.ok) {
+        alert(data.error || 'Có lỗi xảy ra khi xóa khách');
+        return;
+      }
+      guests = data.guests;
+      buildSelect();
+      buildAdminTags();
+    } catch (error) {
+      console.error('Error removing guest:', error);
+      alert('Không thể kết nối đến server. Vui lòng thử lại!');
+    }
   }
 
   // ── Admin panel toggle (với password) ──
