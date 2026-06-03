@@ -24,9 +24,14 @@
   },
   {
     "name": "Bé răng hô",
-    "status": "wait",
+    "status": "yes",
     "added": "2/6/2026",
-    "rsvp": null
+    "rsvp": {
+      "attending": "yes",
+      "count": 1,
+      "message": "aaa",
+      "respondedAt": "2026-06-03T01:23:50.184Z"
+    }
   },
   {
     "name": "Test Guest",
